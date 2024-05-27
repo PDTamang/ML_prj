@@ -1,14 +1,15 @@
 from flask import Flask, request, jsonify, render_template
 import re
 import pickle
-from spellchecker import SpellChecker
+# from spellchecker import SpellChecker
+import spellchecker.spellchecker as sc
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 # Initialize necessary components
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
-spell = SpellChecker()
+spell = sc.SpellChecker()
 
 def clean_text(text):
     # Keep common punctuation and remove others
