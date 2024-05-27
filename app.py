@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template # type: ignore
 import re
 import pickle
-# from spellchecker import SpellChecker
+from spellchecker import SpellChecker
 from nltk.corpus import stopwords # type: ignore
 from nltk.stem import WordNetLemmatizer # type: ignore
 import pandas as pd # type: ignore
@@ -18,7 +18,7 @@ def clean_text(text):
 model = pickle.load(open("youtube_model4.pkl", "rb"))
 
 # Initialize the spell checker
-# spell = SpellChecker()
+spell = SpellChecker()
 
 # Create a Flask application instance
 app = Flask(__name__)
@@ -26,16 +26,16 @@ app = Flask(__name__)
 def contains_special_characters(comment):
     return bool(re.search(r'[^a-zA-Z0-9\s,.;"\'-]', comment))
 
-# def has_spelling_errors(comment):
-#     words = comment.split()
-#     misspelled_words = spell.unknown(words)
-#     return len(misspelled_words) > 0
+def has_spelling_errors(comment):
+    words = comment.split()
+    misspelled_words = spell.unknown(words)
+    return len(misspelled_words) > 0
 
 def predict_sentiment(comment):
     if contains_special_characters(comment):
         return "Special characters not accepted."
-    # if has_spelling_errors(comment):
-    #     return "Spelling errors detected."
+    if has_spelling_errors(comment):
+        return "Spelling errors detected."
     
     comment_cleaned = clean_text(comment)
     sentiment = model.predict([comment_cleaned])

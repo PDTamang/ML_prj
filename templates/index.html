@@ -53,6 +53,20 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
+        document.getElementById('comment').addEventListener('input', function(event) {
+        const input = event.target.value;
+        const errorMessage = document.getElementById('error-message');
+        
+        if (/\d/.test(input)) {
+            // Show error message
+            errorMessage.style.display = 'block';
+            // Remove the last entered character
+            event.target.value = input.replace(/\d/g, '');
+        } else {
+            // Hide error message
+            errorMessage.style.display = 'none';
+        }
+    });
         $(document).ready(function() {
             $('#analyze-form').on('submit', function(e) {
                 e.preventDefault();

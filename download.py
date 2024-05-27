@@ -1,4 +1,4 @@
-import nltk # type: ignore
+import nltk 
 
 nltk.download('stopwords')
 nltk.download('wordnet')
